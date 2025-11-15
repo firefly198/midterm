@@ -1,20 +1,28 @@
 package com.example.midterm
 
+import android.content.Intent
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
+import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 
 class ProductActivity : AppCompatActivity() {
+
+    companion object {
+        const val EXTRA_PRODUCT_PRICE = "product_price"
+    }
+
+    private val productPrice = 120
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContentView(R.layout.activity_product)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
+
+        val addToCartButton: Button = findViewById(R.id.AddBtn)
+
+        addToCartButton.setOnClickListener {
+            val intent = Intent(this, CartActivity::class.java)
+            intent.putExtra(EXTRA_PRODUCT_PRICE, productPrice)
+            startActivity(intent)
         }
     }
 }
